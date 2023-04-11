@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import Axios from 'axios';
+import { configure } from 'axios-hooks';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Search from './screens/Search';
+import Details from './screens/Details';
+import NotFound from './screens/NotFound';
+import NormalizeStyles from './shared/NormalizeStyles';
+import Header from './components/Header/Header';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+const axios = Axios.create({
+  baseURL: `${process.env.REACT_APP_SUPER_HERO_API_BASE_URL}/${process.env.REACT_APP_SUPER_HERO_API_KEY}`,
+});
+
+configure({ axios });
+
+const router = createBrowserRouter([
+  {
+    path: '/details/:id',
+    element: <Details />,
+  },
+  {
+    path: '/',
+    element: <Search />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NormalizeStyles />
+      <Header />
+      <RouterProvider router={router} />
+    </>
   );
 }
 
