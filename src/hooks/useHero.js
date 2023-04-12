@@ -1,4 +1,3 @@
-import axios from 'axios';
 import useAxios from 'axios-hooks';
 
 export default function useHero(heroId) {
@@ -7,8 +6,7 @@ export default function useHero(heroId) {
   });
 
   function setHeroAssessment(hero) {
-    // localStorage.setItem(hero.id, JSON.stringify(hero));
-    axios.post(`/${heroId}`, { hero });
+    localStorage.setItem(hero.id, JSON.stringify(hero));
   }
 
   function getHeroAssessment(heroId) {
